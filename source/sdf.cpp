@@ -1,7 +1,7 @@
 
 #include "sdf.hpp"
 
-float 
+SDF::Intersection 
 SDF::rayMarch (
 	glm::vec3 rayOrigin, 
 	glm::vec3 rayDir,
@@ -9,23 +9,33 @@ SDF::rayMarch (
 	float v, 
 	SDF::Config c
 ) {	
+	SDF::Intersection col;
 	float dist = c.rayMin;
 			
 	for (int i = 0; i < c.rayMaxSteps; ++i) {
 		float depth = SDF::scene(rayOrigin + rayDir * dist);
 		
 		if (depth < c.epsilon) {
-			return dist;
+			col.dist = dist;
+			col.color = SDF::estimateNormal(rayOrigin + rayDir * dist, c);
+			
+			return col;
 		}
 	
 		dist += depth;
 		
 		if (dist >= c.rayMax) {
-			return c.rayMax;
+			col.dist = dist;
+			col.color = c.skyColor;
+			
+			return col; 
 		}
 	}
 	
-	return c.rayMax;
+	col.dist = c.rayMax;
+	col.color = c.skyColor;
+	
+	return col;
 }
 
 

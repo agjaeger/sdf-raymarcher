@@ -31,21 +31,13 @@ int main() {
 			glm::vec3 rayOrigin = c.eye + u * c.right + v * c.up;
 			glm::vec3 rayDir = glm::cross(c.up, c.right) * 1.0f;
 			
-			float distToNearest = rayMarch(rayOrigin, rayDir, u, v, c);
-			
-			glm::vec3 outputColor;
-
-			if (distToNearest >= c.rayMax ) {
-				outputColor = c.skyColor;
-			} else {
-				outputColor = glm::vec3(1.0f, 0.0f, 0.0f);
-			}
+			SDF::Intersection rayCollision = rayMarch(rayOrigin, rayDir, u, v, c);
 			
 			// Get 24-bit pixel sample and write it out
             unsigned char r, g, b;
-            r = static_cast<unsigned char>(outputColor.r * 255.0f);
-            g = static_cast<unsigned char>(outputColor.g * 255.0f);
-            b = static_cast<unsigned char>(outputColor.b * 255.0f);
+            r = static_cast<unsigned char>(rayCollision.color.r * 255.0f);
+            g = static_cast<unsigned char>(rayCollision.color.g * 255.0f);
+            b = static_cast<unsigned char>(rayCollision.color.b * 255.0f);
            
             fileStream << r << g << b;
 		}

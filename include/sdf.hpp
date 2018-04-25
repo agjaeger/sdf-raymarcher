@@ -20,11 +20,16 @@ namespace SDF {
 		int rayMaxSteps = 5;
 	};
 	
+	struct Intersection {
+		float dist;
+		glm::vec3 color;
+	};
+	
 	// implement this
 	float scene (glm::vec3 point);
 	
 	// helper functions
-	float rayMarch (
+	Intersection rayMarch (
 		glm::vec3 rayOrigin, 
 		glm::vec3 rayDir,
 		float u,
