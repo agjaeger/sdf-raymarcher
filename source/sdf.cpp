@@ -12,7 +12,7 @@ SDF::rayMarch (
 	float dist = c.rayMin;
 			
 	for (int i = 0; i < c.rayMaxSteps; ++i) {
-		float depth = SDF::sdfScene(rayOrigin + rayDir * dist);
+		float depth = SDF::scene(rayOrigin + rayDir * dist);
 		
 		if (depth < c.epsilon) {
 			return dist;
@@ -28,10 +28,42 @@ SDF::rayMarch (
 	return c.rayMax;
 }
 
+
+/*
+ * Estimates the gradient of the surface and 
+ * returns it. This is an approximation of the normal at the point2
+ */
+glm::vec3 
+SDF::estimateNormal (
+	glm::vec3 point,
+	SDF::Config c
+) {
+	return glm::normalize(
+		glm::vec3(
+			SDF::scene(
+				glm::vec3(point.x + c.epsilon, point.y, point.z)
+			) - SDF::scene(
+				glm::vec3(point.x - c.epsilon, point.y, point.z)
+			),
+			
+			SDF::scene(
+				glm::vec3(point.x, point.y + c.epsilon, point.z)
+			) - SDF::scene(
+				glm::vec3(point.x, point.y - c.epsilon, point.z)
+			),
+			
+			SDF::scene(
+				glm::vec3(point.x, point.y, point.z + c.epsilon)
+			) - SDF::scene(
+				glm::vec3(point.x, point.y, point.z - c.epsilon)
+			)
+		)
+	);
+}
+
 float 
 SDF::sphere (
 	glm::vec3 point
 ) {
 	return glm::length(point) - 1.0f;
 }
-

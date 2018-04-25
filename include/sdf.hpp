@@ -2,6 +2,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtx/component_wise.hpp>
 
 namespace SDF {
 	struct Config {
@@ -13,14 +14,14 @@ namespace SDF {
 		
 		int renderWidth = 480;
 		int renderHeight = 480;
-		float epsilon =  0.1f;
+		float epsilon =  0.001f;
 		float rayMax = 1000.0f;
 		float rayMin = 0.001f;
 		int rayMaxSteps = 5;
 	};
 	
 	// implement this
-	float sdfScene (glm::vec3 point);
+	float scene (glm::vec3 point);
 	
 	// helper functions
 	float rayMarch (
@@ -31,8 +32,8 @@ namespace SDF {
 		SDF::Config c
 	);
 	
-	// sdf object definitions
-	float sphere (glm::vec3 point);
+	glm::vec3 estimateNormal (glm::vec3 point, Config c);
 	
-
+	// sdf object definitions
+	float sphere (glm::vec3 point);	
 };

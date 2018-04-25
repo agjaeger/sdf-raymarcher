@@ -6,7 +6,7 @@
 #include "sdf.hpp"
 
 float
-SDF::sdfScene (
+SDF::scene (
 	glm::vec3 point
 ) {
 	return SDF::sphere(point);
