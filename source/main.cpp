@@ -9,7 +9,7 @@ float
 SDF::scene (
 	glm::vec3 point
 ) {
-	return SDF::opSubtraction(
+	return SDF::opIntersection (
 		SDF::sSphere(point),
 		SDF::usBox(point, glm::vec3(1.0, 0.5, 0.5))
 	);
