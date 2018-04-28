@@ -9,7 +9,10 @@ float
 SDF::scene (
 	glm::vec3 point
 ) {
-	return SDF::usBox(point, glm::vec3(1.0, 1.0, 1.0));
+	return SDF::opUnion(
+		SDF::sSphere(point),
+		SDF::usBox(point, glm::vec3(1.0, 0.5, 0.5))
+	);
 }
 
 int main() {
