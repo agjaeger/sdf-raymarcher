@@ -48,6 +48,6 @@ namespace SDF {
 	
 	// sdf object op definitions
 	float opUnion (float d1, float d2);
-	float opSubstract (float d1, float d2);
+	float opSubtraction (float d1, float d2);
 	float opIntersection (float d1, float d2);
 };

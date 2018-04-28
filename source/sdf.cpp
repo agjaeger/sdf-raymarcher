@@ -115,7 +115,7 @@ SDF::opUnion (
 }
 
 float 
-SDF::opSubstract (
+SDF::opSubtraction (
 	float d1, float d2
 ) {
 	return glm::max(-d1, d2);
