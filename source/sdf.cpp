@@ -91,8 +91,39 @@ SDF::estimateNormal (
 }
 
 float 
-SDF::sphere (
+SDF::sSphere (
 	glm::vec3 point
 ) {
 	return glm::length(point) - 1.0f;
+}
+
+float
+SDF::usBox (
+	glm::vec3 point,
+	glm::vec3 boxSize
+) {
+	glm::vec3 delta = glm::abs(point) - boxSize;
+
+	return glm::length(glm::max(delta, 0.0f));
+}
+
+float 
+SDF::opUnion (
+	float d1, float d2
+) {
+	return glm::min(d1, d2);
+}
+
+float 
+SDF::opSubstract (
+	float d1, float d2
+) {
+	return glm::max(-d1, d2);
+}
+
+float 
+SDF::opIntersection (
+	float d1, float d2
+) {
+	return glm::max(d1, d2);
 }

@@ -9,14 +9,14 @@ float
 SDF::scene (
 	glm::vec3 point
 ) {
-	return SDF::sphere(point);
+	return SDF::usBox(point, glm::vec3(1.0, 1.0, 1.0));
 }
 
 int main() {
 	SDF::Config c;
 	
 	c.camera = SDF::lookAt (
-		glm::vec3 (3.0f, 0.0f, -2.0f),
+		glm::vec3 (2.0f, 2.0f, 2.0f),
 		glm::vec3 (0.0f, 0.0f, 0.0f),
 		glm::vec3 (0.0f, 1.0f, 0.0f)
 	);

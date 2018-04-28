@@ -15,8 +15,8 @@ namespace SDF {
 		float epsilon =  0.001f;
 		float rayMax = 1000.0f;
 		float rayMin = 0.001f;
-		int rayMaxSteps = 5;
-		int fov = 60;
+		int rayMaxSteps = 100;
+		int fov = 90;
 	};
 	
 	struct Intersection {
@@ -41,7 +41,13 @@ namespace SDF {
 	);
 	
 	glm::vec3 estimateNormal (glm::vec3 point, Config c);
-	
+
 	// sdf object definitions
-	float sphere (glm::vec3 point);	
+	float sSphere (glm::vec3 point);
+	float usBox (glm::vec3 point, glm::vec3 boxSize);	
+	
+	// sdf object op definitions
+	float opUnion (float d1, float d2);
+	float opSubstract (float d1, float d2);
+	float opIntersection (float d1, float d2);
 };
