@@ -11,9 +11,7 @@ float
 SDF::scene (
 	glm::vec3 point
 ) {
-	float sphereScale = 0.1f;
-	
-	return SDF::sSphere(SDF::opRep(point, glm::vec3(1, 1, 1)) / sphereScale) * sphereScale;
+	return SDF::sTorus(SDF::opTx(point, glm::vec3 (0.0f), glm::vec3(0.0f, 0.0f, 90.0f)), glm::vec2(1.0, 0.1));
 }
 
 int main() {

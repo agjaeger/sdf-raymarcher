@@ -107,6 +107,15 @@ SDF::usBox (
 	return glm::length(glm::max(delta, 0.0f));
 }
 
+float
+SDF::sTorus (
+	glm::vec3 point,
+	glm::vec2 torusSize
+) {
+	glm::vec2 q = glm::vec2(glm::length(glm::vec2(point.x, point.z)) - torusSize.x, point.y);
+	return glm::length(q) - torusSize.y;
+}
+
 float 
 SDF::opUnion (
 	float d1, float d2
@@ -131,15 +140,35 @@ SDF::opIntersection (
 glm::vec3 
 SDF::opTx (
 	glm::vec3 p,
-	glm::vec3 t
+	glm::vec3 t,
+	glm::vec3 r
 ) {	
-	glm::mat4 m (1.0f);
+	glm::mat4 transMat (1.0f);
+	transMat[3][0] = t.x;
+	transMat[3][1] = t.y;
+	transMat[3][2] = t.z;
 	
-	m[3][0] = t.x;
-	m[3][1] = t.y;
-	m[3][2] = t.z;
+	glm::mat4 rotXMat (1.0f);
+	transMat[1][1] = glm::cos(glm::radians(r.x));
+	transMat[1][2] = -glm::sin(glm::radians(r.x));
+	transMat[2][1] = glm::sin(glm::radians(r.x));
+	transMat[2][2] = glm::cos(glm::radians(r.x));
 	
-	return glm::vec3(glm::inverse(m) * glm::vec4(p, 1.0f));
+	glm::mat4 rotYMat (1.0f);
+	transMat[0][0] = glm::cos(glm::radians(r.y));
+	transMat[0][2] = -glm::sin(glm::radians(r.y));
+	transMat[2][0] = glm::sin(glm::radians(r.y));
+	transMat[2][2] = glm::cos(glm::radians(r.y));
+	
+	glm::mat4 rotZMat (1.0f);
+	transMat[0][0] = glm::cos(glm::radians(r.z));
+	transMat[1][0] = -glm::sin(glm::radians(r.z));
+	transMat[0][1] = glm::sin(glm::radians(r.z));
+	transMat[1][1] = glm::cos(glm::radians(r.z));
+	
+	glm::mat4 combined = rotZMat * rotYMat * rotXMat * transMat;
+	
+	return glm::vec3(glm::inverse(combined) * glm::vec4(p, 1.0f));
 }
 
 glm::vec3 
