@@ -11,7 +11,7 @@ float
 SDF::scene (
 	glm::vec3 point
 ) {
-	return SDF::sTorus(SDF::opTx(point, glm::vec3 (0.0f), glm::vec3(0.0f, 0.0f, 90.0f)), glm::vec2(1.0, 0.1));
+	return SDF::sTorus(SDF::opTx(SDF::opTwist(point), glm::vec3 (0.0f), glm::vec3(0.0f, 0.0f, 90.0f)), glm::vec2(1.0, 0.1));
 }
 
 int main() {

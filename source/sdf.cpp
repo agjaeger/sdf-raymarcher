@@ -178,3 +178,15 @@ SDF::opRep (
 ) {
 	return glm::mod(p, c) - 0.5f * c;
 }
+
+glm::vec3 
+SDF::opTwist (
+	glm::vec3 p
+) {
+	float c = glm::cos(20.0f * p.y);
+	float s = glm::cos(20.0f * p.y);
+	
+	glm::mat2 m = glm::mat2(c, -s, s, c);
+	
+	return glm::vec3(m * glm::vec2(p.x, p.z), p.y);
+}
