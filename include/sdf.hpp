@@ -51,4 +51,5 @@ namespace SDF {
 	float opSubtraction (float d1, float d2);
 	float opIntersection (float d1, float d2);
 	glm::vec3 opTx (glm::vec3 p, glm::vec3 t);
+	glm::vec3 opRep (glm::vec3 p, glm::vec3 c);
 };

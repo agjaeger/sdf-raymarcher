@@ -141,3 +141,11 @@ SDF::opTx (
 	
 	return glm::vec3(glm::inverse(m) * glm::vec4(p, 1.0f));
 }
+
+glm::vec3 
+SDF::opRep (
+	glm::vec3 p,
+	glm::vec3 c
+) {
+	return glm::mod(p, c) - 0.5f * c;
+}
