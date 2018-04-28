@@ -8,9 +8,7 @@ namespace SDF {
 	struct Config {
 		glm::vec3 skyColor = glm::vec3(0,0,0);
 		
-		glm::vec3 eye = glm::vec3(0, 0, 1);
-		glm::vec3 up = glm::vec3(0, 1, 0);
-		glm::vec3 right = glm::vec3(1, 0, 0);
+		glm::mat4 camera;
 		
 		int renderWidth = 480;
 		int renderHeight = 480;
@@ -18,6 +16,7 @@ namespace SDF {
 		float rayMax = 1000.0f;
 		float rayMin = 0.001f;
 		int rayMaxSteps = 5;
+		int fov = 60;
 	};
 	
 	struct Intersection {
@@ -32,9 +31,13 @@ namespace SDF {
 	Intersection rayMarch (
 		glm::vec3 rayOrigin, 
 		glm::vec3 rayDir,
-		float u,
-		float v, 
 		SDF::Config c
+	);
+	
+	glm::mat4 lookAt (
+		glm::vec3 eye,
+		glm::vec3 center,
+		glm::vec3 up
 	);
 	
 	glm::vec3 estimateNormal (glm::vec3 point, Config c);
