@@ -11,7 +11,25 @@ float
 SDF::scene (
 	glm::vec3 point
 ) {
-	return SDF::sTorus(SDF::opTx(SDF::opTwist(point), glm::vec3 (0.0f), glm::vec3(0.0f, 0.0f, 90.0f)), glm::vec2(1.0, 0.1));
+	return SDF::opSubtraction(
+		SDF::opUnion(
+			SDF::opUnion(
+				SDF::sCylinder (
+					SDF::opTx(point, glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 90.0f)),
+					glm::vec2(0.3, 1.0)
+				),
+				SDF::sCylinder (
+					SDF::opTx(point, glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+					glm::vec2(0.3, 1.0)
+				)
+			),
+			SDF::sCylinder (
+				SDF::opTx(point, glm::vec3(0.0f), glm::vec3(90.0f, 0.0f, 0.0f)),
+				glm::vec2(0.3, 1.0)
+			)
+		),		
+		SDF::usBox(point, glm::vec3(0.5, 0.5, 0.5))		
+	);
 }
 
 int main() {

@@ -116,6 +116,15 @@ SDF::sTorus (
 	return glm::length(q) - torusSize.y;
 }
 
+float
+SDF::sCylinder (
+	glm::vec3 point,
+	glm::vec2 h
+) { 
+	glm::vec2 d = glm::abs(glm::vec2(glm::length(glm::vec2(point.x, point.z)), point.y)) - h;
+	return glm::min(glm::max(d.x, d.y), 0.0f) + glm::length(glm::max(d, 0.0f));
+}
+
 float 
 SDF::opUnion (
 	float d1, float d2
@@ -149,22 +158,28 @@ SDF::opTx (
 	transMat[3][2] = t.z;
 	
 	glm::mat4 rotXMat (1.0f);
-	transMat[1][1] = glm::cos(glm::radians(r.x));
-	transMat[1][2] = -glm::sin(glm::radians(r.x));
-	transMat[2][1] = glm::sin(glm::radians(r.x));
-	transMat[2][2] = glm::cos(glm::radians(r.x));
+	if (r.x > 0.0f) {
+		transMat[1][1] = glm::cos(glm::radians(r.x));
+		transMat[2][1] = -glm::sin(glm::radians(r.x));
+		transMat[1][2] = glm::sin(glm::radians(r.x));
+		transMat[2][2] = glm::cos(glm::radians(r.x));
+	}
 	
 	glm::mat4 rotYMat (1.0f);
-	transMat[0][0] = glm::cos(glm::radians(r.y));
-	transMat[0][2] = -glm::sin(glm::radians(r.y));
-	transMat[2][0] = glm::sin(glm::radians(r.y));
-	transMat[2][2] = glm::cos(glm::radians(r.y));
+	if (r.y > 0.0f) {
+		transMat[0][0] = glm::cos(glm::radians(r.y));
+		transMat[0][2] = -glm::sin(glm::radians(r.y));
+		transMat[2][0] = glm::sin(glm::radians(r.y));
+		transMat[2][2] = glm::cos(glm::radians(r.y));
+	}
 	
 	glm::mat4 rotZMat (1.0f);
-	transMat[0][0] = glm::cos(glm::radians(r.z));
-	transMat[1][0] = -glm::sin(glm::radians(r.z));
-	transMat[0][1] = glm::sin(glm::radians(r.z));
-	transMat[1][1] = glm::cos(glm::radians(r.z));
+	if (r.z > 0.0f) {
+		transMat[0][0] = glm::cos(glm::radians(r.z));
+		transMat[1][0] = -glm::sin(glm::radians(r.z));
+		transMat[0][1] = glm::sin(glm::radians(r.z));
+		transMat[1][1] = glm::cos(glm::radians(r.z));
+	}
 	
 	glm::mat4 combined = rotZMat * rotYMat * rotXMat * transMat;
 	
@@ -183,8 +198,8 @@ glm::vec3
 SDF::opTwist (
 	glm::vec3 p
 ) {
-	float c = glm::cos(20.0f * p.y);
-	float s = glm::cos(20.0f * p.y);
+	float c = glm::cos(glm::radians(20.0f * p.y));
+	float s = glm::cos(glm::radians(20.0f * p.y));
 	
 	glm::mat2 m = glm::mat2(c, -s, s, c);
 	

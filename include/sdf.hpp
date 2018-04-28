@@ -46,6 +46,7 @@ namespace SDF {
 	float sSphere (glm::vec3 point);
 	float usBox (glm::vec3 point, glm::vec3 boxSize);	
 	float sTorus (glm::vec3 point, glm::vec2 torusSize);	
+	float sCylinder (glm::vec3 point, glm::vec2 h);
 	
 	// sdf object op definitions
 	float opUnion (float d1, float d2);
