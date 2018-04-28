@@ -42,24 +42,19 @@ SDF::rayMarch (
  */
 glm::mat4
 SDF::lookAt (
-	glm::vec3 eye,
-	glm::vec3 center,
+	glm::vec3 from,
+	glm::vec3 to,
 	glm::vec3 up
 ) {
-	glm::vec3 Z = glm::normalize(center - eye);
-	glm::vec3 X = glm::normalize(glm::cross(Z, glm::normalize(up)));
-	glm::vec3 Y = glm::normalize(glm::cross(X, Z));
+	glm::vec3 m_forward = glm::normalize(from - to);
+	glm::vec3 m_right = glm::normalize(glm::cross(glm::normalize(up), m_forward));
+	glm::vec3 m_up = glm::normalize(glm::cross(m_forward, m_right));
 
 	return glm::mat4(
-		glm::vec4(X, 0.0f),
-		glm::vec4(Y, 0.0f),
-		glm::vec4(-Z, 0.0f),
-		glm::vec4(
-			-glm::dot(X, eye), 
-			-glm::dot(Y, eye), 
-			glm::dot(Z, eye), 
-			0.0f
-		)
+		glm::vec4(m_right, 0.0f),
+		glm::vec4(m_up, 0.0f),
+		glm::vec4(m_forward, 0.0f),
+		glm::vec4(from, 0.0f)
 	);
 }
 

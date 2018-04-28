@@ -35,8 +35,8 @@ namespace SDF {
 	);
 	
 	glm::mat4 lookAt (
-		glm::vec3 eye,
-		glm::vec3 center,
+		glm::vec3 from,
+		glm::vec3 to,
 		glm::vec3 up
 	);
 	
