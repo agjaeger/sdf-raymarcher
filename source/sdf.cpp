@@ -127,3 +127,17 @@ SDF::opIntersection (
 ) {
 	return glm::max(d1, d2);
 }
+
+glm::vec3 
+SDF::opTx (
+	glm::vec3 p,
+	glm::vec3 t
+) {	
+	glm::mat4 m (1.0f);
+	
+	m[3][0] = t.x;
+	m[3][1] = t.y;
+	m[3][2] = t.z;
+	
+	return glm::vec3(glm::inverse(m) * glm::vec4(p, 1.0f));
+}

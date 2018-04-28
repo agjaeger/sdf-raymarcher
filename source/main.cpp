@@ -5,19 +5,16 @@
 
 #include "sdf.hpp"
 
+SDF::Config c;
+
 float
 SDF::scene (
 	glm::vec3 point
 ) {
-	return SDF::opIntersection (
-		SDF::sSphere(point),
-		SDF::usBox(point, glm::vec3(1.0, 0.5, 0.5))
-	);
+	return SDF::sSphere(SDF::opTx(point, glm::vec3(0, 0, 0)));
 }
 
 int main() {
-	SDF::Config c;
-	
 	c.camera = SDF::lookAt (
 		glm::vec3 (2.0f, 2.0f, 2.0f),
 		glm::vec3 (0.0f, 0.0f, 0.0f),
