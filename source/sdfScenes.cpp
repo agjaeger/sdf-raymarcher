@@ -90,5 +90,5 @@ SDF::scene (
 	glm::vec3 point,
 	SDF::Config c
 ) {
-	return boxMinusCylinderMinusCorners(SDF::opRep(point, glm::vec3(1, 1, 1)), c);
+	return boxMinusCylinderMinusCorners(point, c);
 }
