@@ -25,7 +25,7 @@ namespace SDF {
 	};
 	
 	// implement this
-	float scene (glm::vec3 point);
+	float scene (glm::vec3 point, SDF::Config c);
 	
 	// helper functions
 	Intersection rayMarch (

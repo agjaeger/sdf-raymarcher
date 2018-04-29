@@ -11,12 +11,18 @@ SDF::rayMarch (
 	float dist = c.rayMin;
 			
 	for (int i = 0; i < c.rayMaxSteps; ++i) {
-		float depth = SDF::scene(rayOrigin + rayDir * dist);
+		float depth = SDF::scene(rayOrigin + rayDir * dist, c);
 		
 		if (depth < c.epsilon) {
 			col.dist = dist;
 			col.color = SDF::estimateNormal(rayOrigin + rayDir * dist, c);
-			
+			/*
+				col.color = glm::vec3(
+					i / (c.rayMaxSteps-1), 
+					i / (c.rayMaxSteps-1), 
+					i / (c.rayMaxSteps-1)
+				);
+			*/
 			return col;
 		}
 	
@@ -70,21 +76,21 @@ SDF::estimateNormal (
 	return glm::normalize (
 		glm::vec3(
 			SDF::scene(
-				glm::vec3(point.x + c.epsilon, point.y, point.z)
+				glm::vec3(point.x + c.epsilon, point.y, point.z), c
 			) - SDF::scene(
-				glm::vec3(point.x - c.epsilon, point.y, point.z)
+				glm::vec3(point.x - c.epsilon, point.y, point.z), c
 			),
 			
 			SDF::scene(
-				glm::vec3(point.x, point.y + c.epsilon, point.z)
+				glm::vec3(point.x, point.y + c.epsilon, point.z), c
 			) - SDF::scene(
-				glm::vec3(point.x, point.y - c.epsilon, point.z)
+				glm::vec3(point.x, point.y - c.epsilon, point.z), c 
 			),
 			
 			SDF::scene(
-				glm::vec3(point.x, point.y, point.z + c.epsilon)
+				glm::vec3(point.x, point.y, point.z + c.epsilon), c
 			) - SDF::scene(
-				glm::vec3(point.x, point.y, point.z - c.epsilon)
+				glm::vec3(point.x, point.y, point.z - c.epsilon), c 
 			)
 		)
 	);
