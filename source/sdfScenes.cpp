@@ -92,7 +92,7 @@ SDF::scene (
 ) {
 	float scaleFactor = 0.5f;
 	return 
-		SDF::opUnion(
+		SDF::opIntersection(
 			SDF::usBox(SDF::opRep(point, glm::vec3(0.5, 0.5, 0.5)), glm::vec3(0.1f, 0.1f, 0.1f)),
 			SDF::sSphere(point)
 		);
