@@ -17,5 +17,5 @@ SDF::scene (
 	glm::vec3 point,
 	SDF::Config c
 ) {
-	return sphereOfCubes(SDF::opRep(point, glm::vec3(2, 2, 2)));
+	return sphereOfCubes(SDF::opRep(point, glm::vec3(3, 3, 3)));
 }
